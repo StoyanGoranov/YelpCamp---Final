@@ -1,0 +1,29 @@
+
+.thumbnail img{
+	width:100%;
+}
+
+.thumbnail {
+	padding: 0;
+}
+
+#post img{
+	min-height: 200px;
+	max-height: 350px;
+}
+
+.delete-form{
+	display: inline;
+}
+
+#camp-icon{
+	max-width: 60px;
+}
+
+.form-title{
+	text-align: center;
+}
+
+.form-container{
+	width: 30%; margin: 35px auto;
+}
