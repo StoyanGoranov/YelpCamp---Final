@@ -19,8 +19,9 @@ const campgroundRoutes = require("./routes/campgrounds"),
 
 
 // connect to database
-//mongoose.connect("mongodb://localhost/yelp_camp", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
-mongoose.connect("mongodb+srv://Tony:pass@cluster1-yelpcamp-bpgjj.mongodb.net/test?retryWrites=true&w=majority", {
+
+//console.log(process.env.DATABASEURL);
+mongoose.connect(process.env.DATABASEURL, {
 	useNewUrlParser: true, 
 	useUnifiedTopology: true, 
 	useFindAndModify: false
