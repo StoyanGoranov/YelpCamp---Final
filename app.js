@@ -19,7 +19,8 @@ const campgroundRoutes = require("./routes/campgrounds"),
 
 
 // connect to database
-mongoose.connect("mongodb://localhost/yelp_camp", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+//mongoose.connect("mongodb://localhost/yelp_camp", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+mongoose.connect("mongodb+srv://Tony:pass@cluster1-yelpcamp-bpgjj.mongodb.net/test?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 // use body parser in order to succesfully retrieve info from a get request
 app.use(bodyParser.urlencoded({extended: true}));
 //use public directory for front-end resources
@@ -57,8 +58,8 @@ app.use("/campgrounds", campgroundRoutes);
 
 app.listen(3000,function(){
 	console.log("YelpCamp serving at 3000");
-	console.log("working in v13!");
-	console.log("Latest changes UI improvements and dynamic price")
+	console.log("working in v13Deployed!");
+	console.log("Production version1.0");
 	
 	
 });
