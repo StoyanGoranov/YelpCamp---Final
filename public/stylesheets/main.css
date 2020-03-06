@@ -27,3 +27,10 @@
 .form-container{
 	width: 30%; margin: 35px auto;
 }
+
+
+@media screen and (max-width:992px){
+	#info-column-name{
+		display:none
+	}
+}

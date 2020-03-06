@@ -19,9 +19,16 @@ const campgroundRoutes = require("./routes/campgrounds"),
 
 
 // connect to database
-//console.log(process.env.DATABASEURL);
-const url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp";
-mongoose.connect(process.env.DATABASEURL, {
+var url;
+console.log("Default database url set to: " + process.env.DATABASEURL);
+console.log("If condition will follow first branch: "+!process.env.DATABASEURL);
+if(!process.env.DATABASEURL){
+	url =  "mongodb://localhost/yelp_camp";
+} else {
+	url = process.env.DATABASEURL;
+}
+
+mongoose.connect(url, {
 	useNewUrlParser: true, 
 	useUnifiedTopology: true, 
 	useFindAndModify: false
@@ -67,7 +74,7 @@ app.use("/campgrounds", campgroundRoutes);
 const port = process.env.PORT || 3000;
 app.listen(port,function(){
 	console.log("YelpCamp server started! ");
-	console.log("working in v13Deployed!");
+	console.log("working in v14!");
 	console.log("Production version1.0");
 	
 	
