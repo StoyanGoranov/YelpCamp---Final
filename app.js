@@ -1,3 +1,4 @@
+require ('dotenv').config();
 const express 		= require("express"),
 	  app 			= express(),
 	  bodyParser 	= require("body-parser"),
@@ -11,12 +12,12 @@ const express 		= require("express"),
 	  Comment		= require("./models/comment"),
 	  User			= require("./models/user"),
 	  seedDB		= require("./seeds");
+	  
 	 
 const campgroundRoutes = require("./routes/campgrounds"),
 	  commentRoutes = require ("./routes/comments"),
 	  indexRoutes = require ("./routes/index");
 	  
-
 
 // connect to database
 var url;
@@ -45,7 +46,9 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 app.use(flash());
-//seedDB(); //seed the DB
+//seedDB();
+
+
 
 //Passport config
 app.use(require("express-session")({
@@ -53,6 +56,7 @@ app.use(require("express-session")({
 	resave: false,
 	saveUninitialized: false
 }));
+app.locals.moment = require("moment");
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -71,11 +75,12 @@ app.use(indexRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
 
+
 const port = process.env.PORT || 3000;
 app.listen(port,function(){
 	console.log("YelpCamp server started! ");
-	console.log("working in v14!");
-	console.log("Production version1.0");
+	console.log("working in v15!");
+	console.log("Production version 2.0");
 	
 	
 });

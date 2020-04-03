@@ -8,8 +8,8 @@
 }
 
 #post img{
-	min-height: 200px;
-	max-height: 350px;
+	height: 225px;
+	/* max-height: 250px; */
 }
 
 .delete-form{
@@ -28,6 +28,13 @@
 	width: 30%; margin: 35px auto;
 }
 
+.inline{
+	display:inline;
+}
+
+#search-form{
+	margin-right:15px;
+}
 
 @media screen and (max-width:992px){
 	#info-column-name{

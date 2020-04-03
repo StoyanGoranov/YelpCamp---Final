@@ -3,16 +3,35 @@ const router = express.Router();
 const Campground = require ("../models/campground");
 const middleware = require ("../middleware");
 
+
 //INDEX ROUTE
 router.get("/", function(req, res){
-	//Get all campgrounds from DB
-	Campground.find({}, function(err, allCampgrounds){
-		if(err){
-			console.log(err);
-		} else {
-			res.render("campgrounds/index", {campgrounds: allCampgrounds});
+	let noMatch = null;
+	if (req.query.search){
+				const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+		//Get all campgrounds from DB
+			Campground.find({name:regex}, function(err, allCampgrounds){
+				if(err){
+					console.log(err);
+				} else {
+					
+					if(allCampgrounds < 1){
+						noMatch = "No campgrounds match that query, please try again.";
+					}
+					res.render("campgrounds/index", {campgrounds: allCampgrounds, noMatch:noMatch});
+				}
+			});
+		}else{
+			//Get all campgrounds from DB
+			Campground.find({}, function(err, allCampgrounds){
+				if(err){
+					console.log(err);
+				} else {
+					res.render("campgrounds/index", {campgrounds: allCampgrounds, noMatch:noMatch});
+				}
+			});
 		}
-	});
+	
 	
 });
 //NEW ROUTE
@@ -22,16 +41,17 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 //CREATE ROUTE
 router.post("/", middleware.isLoggedIn, function(req, res){
 	//get data from form and add campgrounds array
-	var name = req.body.name;
-	var price = req.body.price;
-	var image = req.body.image;
-	var desc = req.body.description;
-	var author = {
+	// var name = req.body.name;
+	// var price = req.body.price;
+	// var image = req.body.image;
+	// var desc = req.body.description;
+	req.body.campground.author = {
 		id: req.user._id,
 		username: req.user.username
 	}
 	
-	var newCampground = {name:name,  price:price, image:image, description: desc, author:author}
+	
+	var newCampground = req.body.campground;
 	//create a new campground and save to DB
 	Campground.create(newCampground, function(err, newlyCreated){
 		if(err){
@@ -51,7 +71,11 @@ router.get("/:id", function(req, res){
 		if(err || !foundCampground){
 			console.log(err);
 		} else {
-			//console.log(foundCampground);
+			console.log("have comments been populated");
+			console.log(foundCampground.populated("comments"));
+			console.log(foundCampground);
+			console.log("Comments are:")
+			console.log(foundCampground.comments);
 			//render show template with that campground
 			res.render("campgrounds/show", {campground: foundCampground});
 		}
@@ -99,7 +123,9 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res){
 	});
 });
 
-//middleware
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 
 

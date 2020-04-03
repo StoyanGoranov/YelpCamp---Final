@@ -3,10 +3,19 @@ const mongoose = require("mongoose");
 
 //SCHEMA SETUP
 const campgroundSchema = new mongoose.Schema({
-	name: String,
+	name: {
+		type: String,
+		required: "Campground name cannot be blank"
+	},
 	price: String,
-	image: String,
-	description: String,
+	image: {
+		type: String,
+		required: "Campground image cannot be blank"
+	},
+	description: {
+		type: String,
+		required: "Campground description cannot be blank"
+	},
 	author: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -14,6 +23,11 @@ const campgroundSchema = new mongoose.Schema({
 		},
 		username: String
 	},
+	createdAt:{
+		type:Date,
+		default: Date.now
+	}
+	,
 	comments: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
