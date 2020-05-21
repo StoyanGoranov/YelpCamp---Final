@@ -8,10 +8,7 @@ const campgroundSchema = new mongoose.Schema({
 		required: "Campground name cannot be blank"
 	},
 	price: String,
-	image: {
-		type: String,
-		required: "Campground image cannot be blank"
-	},
+	image: String,
 	description: {
 		type: String,
 		required: "Campground description cannot be blank"

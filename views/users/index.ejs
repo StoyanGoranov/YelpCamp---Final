@@ -1,0 +1,106 @@
+<%- include ("../partials/header"); %>
+
+
+		
+		<div class="container">
+			<form action="/users" method="GET" class="form-inline inline" id="search-form">
+									<div class="form-group input-group-sm">
+										<input type="text" name="search" placeholder="Search users" class="form-control">
+										<input type="submit" value="Search" class="btn btn-sm btn-default">
+									</div>
+			</form>
+		</div>
+	
+
+	<div class="container mb-4">
+		
+		<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+			<% if (noMatch !== null){ %>
+				<div class="col-md-12">
+						<h3>
+							<%= noMatch %>
+						</h3>
+				</div>
+			<% } %>
+			<% users.forEach(function(user){ %>
+
+
+				 <div class="col-md-4 col-sm-6 col-xs-12">
+
+						<div class="avatar" id="profile">
+							 <img src="<%= user.avatar == ""?user.defaultAvatar:user.avatar %>">
+							 <div class="caption">
+								 <h4> <%= user.username  %> </h4>
+								<!-- <%// if(currentUser && currentUser.isAdmin){ %>
+									 <a href="/users/<%=// user._id %>/edit" class="btn btn-warning btn-sm">Edit</a>
+								<%// } %>
+									 <a href="/users/<%=// user._id %>" class="btn btn-info btn-sm">Check profile</a>
+								 <%// if(currentUser && currentUser.isAdmin){ %>
+									 <form class="delete-form" action="/users/<%= user._id %>?_method=DELETE" method="POST">
+										<button class="btn btn-danger btn-sm">
+											Delete
+										</button>
+									 </form>
+								 <%// } %>
+								 <!-- <p> -->
+									  <!-- class="btn btn-primary">Check profile
+								 </p> -->
+								 <a href="/users/<%= user._id %>" class="btn btn-primary btn-sm">Check profile</a>
+							 </div>
+						</div>
+
+
+
+
+				</div> 
+			<% }); %>
+		</div>
+		
+		<nav aria-label="Page navigation">
+			<% if (pages && pages > 0) { %>
+			<ul class="pagination justify-content-center mt-4">
+				<% if (current == 1) { %>
+				<li class="page-item disabled"><a class="page-link">First</a></li>
+				<% } else { %>
+				<li><a class="page-link" href="/users<%if(search){%>?search=<%=search%><%}%>">First</a></li>
+				<% } %>
+				
+				<% if (current == 1) { %>
+				<li class="page-item disabled"><a class="page-link">«</a></li>
+				<% } else { %>
+				<li><a class="page-link" href="/users?page=<%= Number(current) - 1 %><%if(search){%>&search=<%=search%><%}%>">«</a></li>
+				<% } %>
+				
+				<% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+				<% if (i !== 1) { %>
+				<li class="page-item disabled"><a class="page-link">...</a></li>
+				<% } %>
+				<% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+				<% if (i == current) { %>
+				<li class="active"><a class="page-link"><%= i %></a></li>
+				<% } else { %>
+				<li><a class="page-link" href="/users?page=<%= i %><%if(search){%>&search=<%=search%><%}%>"><%= i %></a></li>
+				<% } %>
+				<% if (i == Number(current) + 4 && i < pages) { %>
+				<li class="page-item disabled"><a class="page-link">...</a></li>
+				<% } %>
+				<% } %>
+				
+				<% if (current == pages) { %>
+				<li class="page-item disabled"><a class="page-link">»</a></li>
+				<% } else { %>
+				<li><a class="page-link" href="/users?page=<%= Number(current) + 1 %><%if(search){%>&search=<%=search%><%}%>">»</a></li>
+				<% } %>
+				
+				<% if (current == pages) { %>
+				<li class="page-item disabled"><a class="page-link">Last</a></li>
+				<% } else { %>
+				<li><a class="page-link" href="/users?page=<%= pages %><%if(search){%>&search=<%=search%><%}%>">Last</a></li>
+				<% } %>
+			</ul>
+			<% } %>
+		</nav>
+	</div>
+
+
+<%- include ("../partials/footer"); %>

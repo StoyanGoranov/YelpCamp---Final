@@ -1,0 +1,167 @@
+<%- include ("../partials/header") %>
+
+<div class="container">
+	<div class="row mb-4">
+		<div class="col-xl-4 col-md-6 col-sm-12">
+				 <h3>
+					 <% if(currentUser && currentUser.id === user.id){ %>
+						 Your profile
+					 <% } else { %>		
+						<%= user.username %>'s profile 
+					 <% } %>
+				</h3>
+				<div class="card border-white profile-card">
+					<img id="profileimage" class="card-img-top" src="<%= user.avatar == ""?user.defaultAvatar:user.avatar %>" alt="User profile photo">
+					<div class="card-body mr-3 ml-3">
+						<ul class="list-group">
+								<% if (!user.firstName && !user.lastName && !user.email){ %>
+								<li class="list-group-item">
+									<% if(currentUser && currentUser.id === user.id){ %> 
+										<h5>You haven't added any personal info yet.</h5>
+									<% } else { %>
+										<h5>This user hasn't added any personal info yet.</h5>
+									<% } %>
+								</li>	
+								<% } %>
+								<% if(user.firstName || user.lastName){ %>
+								<li class="list-group-item">
+									<label class="fname">First name:</label>
+									<h5  class="fname">
+										<%= user.firstName %>  
+									</h5>
+								</li>
+								<li class="list-group-item">
+									<label class="fname">Last name:</label>
+									<h5  class="fname">
+										<%= user.lastName %>  
+									</h5>
+								</li>					
+								<% } %>
+								<% if (user.email){ %>
+									<li class="list-group-item">
+										<label class="email">E-mail:</label>
+										<h5 class="email">
+											<%= user.email %>	
+										</h5>
+									</li>
+								<% } %>
+						</ul>
+						<ul class="p0">
+							<% if(currentUser && currentUser.id === user.id){ %>
+								<li class="mt-2 d-flex justify-content-center">
+									<a class="btn btn-primary btn-sm width100 " href="/users/<%= user.id %>/edit">Update Profile</a>
+									<a id="change-pass" class="btn btn-primary btn-sm width49 ml-2 hidden" href="/users/<%= user.id %>/changepassword">Change Password</a>
+								</li>
+							<% } %>
+							<% if (currentUser && currentUser.id === user.id && currentUser.isAdmin === true){ %>
+								<div id="admin">
+									<h5 class="text-center">
+										You have admin permissions		
+									</h5>
+									<a class="btn btn-primary btn-sm width100 " href="/admin/campgrounds">Admin Panel</a>
+								</div>
+							<% } else  %>
+							<!-- Button trigger modal -->
+							<% if (currentUser && currentUser.id === user.id){ %>
+								<li class="mt-2">
+									<button type="button" class="btn btn-outline-danger btn-sm width100 border border-danger" data-toggle="modal" data-target="#exampleModal" data-user="<%= user._id %>">
+										<i id= 'delete-icon' class="fas fa-trash-alt"></i>
+									</button>	
+								</li>
+							<% } %> 
+						</ul>	
+					</div>
+				</div>
+			
+		</div>
+		<div class="col-xl-8 col-md-6 col-sm-12">
+			<% if (user.about.length > 0){ %>
+			<div class="card bg-light margin48">	
+				<div class="card-body">
+					<h4 class="card-title">
+						<% if(currentUser && currentUser.id === user.id){ %>
+							<em>About you</em>
+						<% } else{ %>
+ 							<em>User description</em>
+						<% } %>
+					</h4>
+					<p class="card-text pl-3"><%= user.about %></p>
+				</div>
+			</div>
+			<% } %>
+			<div class="card bg-light mt-3">
+				<div class="card-body">
+					<% if(campgrounds.length > 0) { %>
+					<h4 class="card-title">
+						<% if(currentUser && currentUser.id === user.id){ %>
+							<em>Your campgrounds:</em>
+						<% } else { %>
+							<em><%= user.username %>'s Campgrounds:</em>
+						<% } %>
+					</h4>
+					<% } else if (currentUser && currentUser.id === user.id) { %>
+					<h4>
+						<p>
+							<em>You don't have any posts yet </em>
+						</p>
+						<p>
+							<a href="/campgrounds/new"><em> Add your first one?</em> </a>
+						</p>
+					</h4>
+					<% } else { %>
+					<h4>
+						<em>This user hasn't posted any campgrounds yet</em>
+					</h4>
+					<% } %>
+					<ul>
+						<% campgrounds.forEach(function(campground){ %>
+							<li class="mb-2"><a href="/campgrounds/<%= campground.id %>"><%= campground.name %> </a> - <span>posted on <%= moment(campground.createdAt).format("DD MMM YYYY");%></span></li> 
+						<% }); %>
+					</ul>
+				</div>
+				
+			</div>
+				
+		</div>
+	</div>
+	
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border border-danger">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       	<ul>
+			<strong>Are you sure you want to delete your account at YelpCamp?
+			<br>
+			In compliances with the General Data Protection Regulation <a href="https://gdpr-info.eu/" target="_blank"><em>(GDPR)</em></a> the following:
+			</strong>
+			<li class="pl-2"><em>- User Account at YelpCamp</em> </li>
+			<li class="pl-2"><em>- Campground Posts</em> </li>
+			<li class="pl-2"><em>- Comments</em></li>
+			<strong>of yours will be <em>permanently</em> deleted!</strong>
+		 </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+        <form class="delete-form" id="deleteUser" action="" method="POST">
+			<button class="btn btn-danger width100">
+				Delete permanently
+			</button>
+		</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/scripts/usersShow.js"></script>
+<%- include ("../partials/footer") %>

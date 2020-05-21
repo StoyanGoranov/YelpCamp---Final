@@ -1,18 +1,22 @@
 <%- include ("../partials/header") %>
 
 
-<div class="container">
-	<div class="row ">
-		<h1 class="form-title">Edit <%= campground.name %></h1>
-		<div class="form-container">
+<div class="container mb-4">
+	<div class="row justify-content-center ">
+		<div class="col-md-12 text-center">
+			<h1 class="form-title">Edit <%= campground.name %></h1>
+		</div>
+		
+		<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
 			<form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST">
+				<span class="tooltip-container"></span>
 				<div class="form-group">
 					<label for="name">Name</label>
-					<input class="form-control" type="text" name="campground[name]" value="<%= campground.name %>">
+					<input id="name" class="form-control" type="text" name="campground[name]" value="<%= campground.name %>" maxlength="50"  data-toggle="tooltip"  data-placement="bottom" data-trigger="manual" ะด title="Campground name is a required field">
 				</div>
 				<div class="form-group">
 					 <label for="image">Image Url</label>
-					<input class= "form-control" type="text" name="campground[image]" value="<%= campground.image %>">
+					<input id="image" class= "form-control" type="text" name="campground[image]" value="<%= campground.image %>" data-toggle="tooltip"  data-placement="bottom" data-trigger="manual" title="Image URL is a required field">
 				</div>
 				<div class="form-group">
 					 <label for="cost">Price</label>
@@ -20,29 +24,28 @@
 				</div>
 				<div class="form-group">
 					<label for="description">Description</label>
-					<input class= "form-control" type="text" name="campground[description]" value="<%= campground.description %>">
+					<textarea id="description" class= "form-control" type="text" maxlength="5000" name="campground[description]" rows="6" data-toggle="tooltip"  data-placement="bottom" data-trigger="manual" title="Description is a required field"><%= campground.description %></textarea>
 				</div>
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label for="location">Location Name</label>
 					<input class="form-control" type="text" name="campground[location]">
 					<label for="longitude">Longitude</label>
 					<input class="form-control" type="number" name="campground[lng]">
 					<label for="latitude">Latitude</label>
 					<input class="form-control" type="number" name="campground[lat]">
-				</div>
+				</div> -->
 				<div class="form-group">
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+					<button id="post" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
 				</div>
 				
 				
 			</form>
-				<a class="btn btn-danger btn-block " href="/campgrounds/<%= campground._id %>">Cancel</a>	
+				<a class="btn btn-outline-danger btn-block " href="/campgrounds/<%= campground._id %>">Cancel</a>	
 			
 			
 		</div>
 	</div>
 </div>
 
-
-
+<script src="/scripts/campgroundVerify.js"></script>
 <%- include ("../partials/footer") %>

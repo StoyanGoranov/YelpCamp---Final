@@ -2,6 +2,10 @@ body {
 	background-color: black;
 }
 
+footer{
+	display:none;
+}
+
 #landing-header{
 	z-index: 1;
 	position: relative;

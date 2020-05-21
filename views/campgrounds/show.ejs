@@ -1,81 +1,212 @@
- <%- include ("../partials/header"); %>
+<%- include ("../partials/header"); %>
 
 <div class="container">
+
 	<div class="row">
 		<div class="col-md-3">
-			<p id="info-column-name" class="lead">YelpCamp</p>
-			<div class="list-group">
-				<li class="list-group-item"><a href="/campgrounds">Back to Campgrounds</a></li>
-				<li class="list-group-item">Info 2</li>
-				<li class="list-group-item">Info 3</li>
+			
+			<div class="list-group mb-3">
+				<!-- <li class="list-group-item"><a href="/campgrounds">Back to Campgrounds</a></li> -->
+				<li class="list-group-item">Info 1</li>
+				<li class="list-group-item">A Boring Ad</li>
+				<li class="list-group-item">Your Amazing Ad</li>
 			</div>
 			<div id='map'></div>
 		</div>
+		
 		<div class="col-md-9">
-			<div class="thumbnail">
-				<img class="img-responsive" src="<%= campground.image %>">
-				<div class="caption">
-					<h4 class="pull-right">
-						<% if(campground.price>0){ %>
-							$<%= campground.price %>/night
-						<% } else { %>
-							Free of charge
-						<% } %>
-					</h4>
-					<h4>
-						<a><%= campground.name %></a>
-					</h4>
-					<p>
-						<%= campground.description %>
-					</p>
-					<p>
-						<em>Submitted by <%= campground.author.username %>, <%=moment(campground.createdAt).fromNow() %></em>
-					</p>
-					<% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
-					<a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
-					<form class="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
-						<button class="btn btn-danger">
-							Delete
-						</button>
-					</form>
+			
+			<div class="card mb-4">
+				<img src="<%= campground.image %>" class="card-img-top card-img-camp-show" alt="Campground Image">
+				<div class="card-body">
+					
+					<div class="card-title">
+						<span class="float-right">
+							<% if(campground.price>0){ %>
+								<%= campground.price %>/night
+							<% } else { %>
+								Free of charge
+							<% } %>
+						</span>
+						<h5><%= campground.name %></h5>
+					</div>
+					<p class="card-text"><%= campground.description %></p>
+					<% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+						<div class="float-right">
+							<a class="btn btn-sm btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal" data-campground="<%= campground._id %>">
+								Delete
+							</button>
+						</div>
 					<% } %>
-				</div>
+					<div class="pt-2">
+					  	<em>Submitted by <a href="/users/<%= campground.author.id %>"><%= campground.author.username %></a>, <%=moment(campground.createdAt).fromNow() %></em>
+					</div>
+				 </div>
 			</div>
-			<div class="well">
-				<div class="text-right">
-					<a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
+
+			
+			<div class="card mb-4">
+				<div class="card-body pb-4 mt-2">
+					<a class="btn btn-sm btn-success d-flex float-right" role="button" data-toggle="collapse" href="#collapseComment" aria-expanded="false" aria-controls="collapseComment">Add New Comment</a>
+					<div class="card-title d-flex pt-2 mb-0">
+						<h5><strong>Comments<span aria-hidden="true"></span></strong></h5>
+					</div>
+					<hr class="mt-0 mb-0">
 				</div>
-				<hr>
-					<% 	
-						campground.comments.forEach(function(comment){ 
-							//console.log(campground.comments.comment);
+				<span class="tooltip-container"></span>
+				<!-- Collapsible Write Comment Form	 -->
+				<div class="collapse" id="collapseComment">
+					<div class="col-12">
+						<div class="card mb-4" style="border-left: 5px solid #00C851;">
+							<div class="card-body">
+								
+									<% if(!currentUser) { %>
+									<!--If the user is not logged in, direct him to the login page-->
+								<h5>You need to login before you can comment. <a href="/login"><em>Log in</em></a> or <a href="../users/new"><em>Sign up</em></a>.</h5>
+									<% } %>
+									<% if(currentUser) { %>
+									<!--If the user is logged in, show the new comment form-->
+
+								<h4>Write your comment <span  aria-hidden="true"></span></h4>
+								<form id="add-comment-form" action="/campgrounds/<%= campground._id %>/comments" method="POST">
+									
+									<div class="card-header form-control">
+										 <%= currentUser.username %>
+									</div>
+									<div class="form-group">
+									  <textarea id="commentNew" class="form-control comment" name="comment[text]" placeholder="Write your comment..." form="add-comment-form" rows="5" cols="70" maxlength="350" data-toggle="tooltip"  data-placement="bottom" data-trigger="manual" title=""></textarea>
+									</div>
+									<div class="form-group">
+									  <button id="post" class="btn btn-success btn-sm width100">Comment <span aria-hidden="true"></span></button>
+									</div>
+								</form>
+								<!-- <a class="btn btn-outline-danger btn-sm width100 justify-content-center editButton" role="button" data-toggle="collapse" href="#collapseComment" aria-expanded="false" aria-controls="collapseComment">Cancel</a> -->
+									<% } %>
+							</div>
+						</div>
+					</div>
+					
+					
+  				</div>
+				<span class="hidden"><%= campground.comments %></span>
+				<% 	campground.comments.forEach(function(comment){ %>
+				<div class="row justify-content-center mb-3">
+					<div class="col-11">
+						<% if(currentUser && currentUser.id == comment.author.id){ %>
+						<!-- Collapsible Edit Comment Form -->	
+						<div class="collapse" id="collapseEdit<%= comment._id %>">
+							<div class="card" style="border-left: 5px solid #ffbb33; margin-top: 15px;">
+								<div class="card-body d-flex flex-column">
+									<h4>Edit your comment <span aria-hidden="true"></span></h4>
+									<form id="edit-comment-form<%= comment._id %>" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+										<div class="card-header form-control">
+											<%= currentUser.username %>
+										</div>
+										<div class="form-group">
+											<textarea id="commentEdit" class="form-control" name="comment[text]" placeholder="Your comment text..." form="edit-comment-form<%= comment._id %>" rows="5" cols="70" maxlength="350" data-toggle="tooltip"  data-placement="bottom" data-trigger="manual" title=""><%= comment.text %></textarea>
+										</div>
+										<div class="form-group">
+											<button id="postEdit"  class="btn btn-warning btn-sm width100">Edit comment <span aria-hidden="true"></span></button>
+										</div>
+									</form>
+									<a class="btn btn-outline-danger btn-sm width100 justify-content-center editButton" role="button" data-toggle="collapse" data-commentid="<%- comment._id %>" href="#collapseEdit<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%= comment._id %>">Cancel</a>
 							
-							%>
-				<div class="row">
-					<div class="col-md-12">
-						<strong><%= comment.author.username %></strong>
-						<span class="pull-right"> <%= moment(comment.createdAt).fromNow() %></span>
-						<p>
-							<%= comment.text %>
-						</p>
-						<% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-							<a class="btn btn-xs btn-warning" href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
-							<form class="delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id%>?_method=DELETE" method="POST">
-								<button class="btn btn-xs btn-danger">
-									Delete
-								</button>
-							</form>
+								</div>
+							</div>
+						</div>
 						<% } %>
+						<div id="comment<%= comment._id %>">
+							<div class="card">
+								<div class="card-header">
+									<% if( currentUser && comment.author.id.equals(currentUser._id)) { %> 
+										<strong><em><%= comment.author.username %></em> </strong>
+									<% } else { %>
+										<strong class="<%= comment.author.isAdmin?"text-danger":"" %>"><%= comment.author.username %></strong> 
+									<% } %> 
+
+
+										<div class="float-right"> <%= moment(comment.createdAt).fromNow() %></div>
+								</div>
+								<div class="card-body">
+									<span class="clearfix"></span>
+									<% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+									<div class="float-right">
+										<!-- <a class="btn btn-xs btn-warning" href="/campgrounds/<%=// campground._id %>/comments/<%=// comment._id %>/edit">Edit</a> -->
+										<a class="btn btn-sm btn-warning editButton" role="button" data-toggle="collapse" data-commentid="<%- comment._id %>" href="#collapseEdit<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%= comment._id %>">Edit</a>
+											<!-- Button trigger modal -->
+										<button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#staticBackdrop" data-comment="<%= comment._id %>" data-campground="<%= campground._id %>">
+												Delete
+										</button>
+								
+									</div>
+									<% } %>
+									<p class="pt-2">	
+										<%= comment.text %>
+									</p>									
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
- 				 
-<% }) %>
-				
+					
+				<% }) %>
+			</div>
+		</div>
+	</div>
+	
+</div>
+<!-- Modal Delete Campground -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog  modal-dialog-centered" role="document">
+		<div class="modal-content border border-danger">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          			<span aria-hidden="true">&times;</span>
+        		</button>
+			</div>
+			<div class="modal-body">
+				Are you sure you want to delete this Campground?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+				<form class="delete-form" id="deleteCampground" action="" method="POST">
+					<button class="btn btn-danger">
+						Delete permanently
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal Delete Comment -->
+<div class="modal fade" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content border border-danger">
+			<div class="modal-header">
+				<h5 class="modal-title" id="staticBackdropLabel">Confirm Delete</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Are you sure you want to delete this Comment?
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+				<form class="delete-form" id="deleteComment" action="" method="POST">
+					<input type="submit" class="btn btn-danger" value="Delete permanently">
+				</form>
 			</div>
 		</div>
 	</div>
 </div>
 
+
+
+<script src="../scripts/campgroundsShow.js"></script>
 <%- include ("../partials/footer"); %>
 
 

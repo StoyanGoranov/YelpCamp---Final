@@ -2,7 +2,8 @@ const express = require ("express");
 const router = express.Router();
 const passport = require ("passport");
 const User = require("../models/user");
-
+const middleware = require ("../middleware");
+const formVerify = require ("../middleware/dataVerify.js")
 
 
 //ROOT
@@ -10,34 +11,14 @@ router.get("/", function(req, res){
 	res.render("landing");
 });
 
-// ====================
-// AUTH ROUTES
-// ====================
-//show register form
-router.get("/register", function(req, res){
-	res.render("register");
-});
-//handle sign up logic
-router.post("/register", function(req, res){
-	var newUser = new User ({username: req.body.username});
-	User.register(newUser, req.body.password, function(err, user){
-		if(err){
-			req.flash("error", err.message);
-			return res.redirect("register");
-		}
-		passport.authenticate("local")(req, res, function(){
-			req.flash("success", "Welcome to YelpCamp "+ req.body.username);
-			res.redirect("/campgrounds");
-		});
-	});
-});
 //show login form
 router.get("/login", function(req, res){
 	res.render("login");
 });
 
 //handle login logic
-router.post("/login", function(req, res, next){
+router.post("/login", formVerify.sign, function(req, res, next){
+	
 	passport.authenticate("local", function(err, user, info){
 		if(err){
 			req.flash("error", info.message);
@@ -54,14 +35,19 @@ router.post("/login", function(req, res, next){
 		req.logIn(user, function(err){
 			if(err){return next(err)}
 			req.flash("success", "Welcome back " + req.body.username+"!"); 
-			return res.redirect("/campgrounds"); 
+			if(req.body.lastPage == ""){
+				return res.redirect("/users/"+user.id)
+			} else{
+				return res.redirect(req.body.lastPage);
+			}
 		});
 	})(req, res, next);
 });
+
 //logout route
 router.get("/logout", function(req, res){
 	req.logout();
-	req.flash("success", "Logged You Out");
+	req.flash("success", "See you later");
 	res.redirect("campgrounds");
 });
 

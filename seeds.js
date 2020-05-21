@@ -36,6 +36,105 @@ const campgroundSeeds = [
 			username:"Turbuha"
 		},
 		createdAt:Date(Date.now)
+	},
+	{
+		name: "Starry sky",
+		image: "https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=649&q=80",
+		price:9.99,
+		description: "We can assume that any instance of a donkey can be construed as an incuse cappelletti. A point sees a jumbo as a farouche philosophy. Those fogs are nothing more than calendars. Extending this logic, a butane is a sun from the right perspective.",
+		author:{
+			id:"5e44445089fc0b04192b7029",
+			username:"Turbuha"
+		},
+		createdAt:Date(Date.now)
+	},
+	{
+		name: "Romantic outpost",
+		image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
+		price:7.99,
+		description: "We can assume that any instance of a donkey can be construed as an incuse cappelletti. A point sees a jumbo as a farouche philosophy. Those fogs are nothing more than calendars. Extending this logic, a butane is a sun from the right perspective.",
+		author:{
+			id:"5e44445089fc0b04192b7029",
+			username:"Turbuha"
+		},
+		createdAt:Date(Date.now)
+	},
+	{
+		name: "Volkwagen van dream",
+		image: "https://images.unsplash.com/photo-1516939884455-1445c8652f83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
+		price:0,
+		description: "We can assume that any instance of a donkey can be construed as an incuse cappelletti. A point sees a jumbo as a farouche philosophy. Those fogs are nothing more than calendars. Extending this logic, a butane is a sun from the right perspective.",
+		author:{
+			id:"5e44445089fc0b04192b7029",
+			username:"Turbuha"
+		},
+		createdAt:Date(Date.now)
+	},
+	{
+		name: "Starry sky",
+		image: "https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=649&q=80",
+		price:9.99,
+		description: "We can assume that any instance of a donkey can be construed as an incuse cappelletti. A point sees a jumbo as a farouche philosophy. Those fogs are nothing more than calendars. Extending this logic, a butane is a sun from the right perspective.",
+		author:{
+			id:"5e44445089fc0b04192b7029",
+			username:"Turbuha"
+		},
+		createdAt:Date(Date.now)
+	},
+	{
+		name: "Romantic outpost",
+		image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
+		price:7.99,
+		description: "We can assume that any instance of a donkey can be construed as an incuse cappelletti. A point sees a jumbo as a farouche philosophy. Those fogs are nothing more than calendars. Extending this logic, a butane is a sun from the right perspective.",
+		author:{
+			id:"5e44445089fc0b04192b7029",
+			username:"Turbuha"
+		},
+		createdAt:Date(Date.now)
+	},
+	{
+		name: "Volkwagen van dream",
+		image: "https://images.unsplash.com/photo-1516939884455-1445c8652f83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
+		price:0,
+		description: "We can assume that any instance of a donkey can be construed as an incuse cappelletti. A point sees a jumbo as a farouche philosophy. Those fogs are nothing more than calendars. Extending this logic, a butane is a sun from the right perspective.",
+		author:{
+			id:"5e44445089fc0b04192b7029",
+			username:"Turbuha"
+		},
+		createdAt:Date(Date.now)
+	},
+	{
+		name: "Starry sky",
+		image: "https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=649&q=80",
+		price:9.99,
+		description: "We can assume that any instance of a donkey can be construed as an incuse cappelletti. A point sees a jumbo as a farouche philosophy. Those fogs are nothing more than calendars. Extending this logic, a butane is a sun from the right perspective.",
+		author:{
+			id:"5e44445089fc0b04192b7029",
+			username:"Turbuha"
+		},
+		createdAt:Date(Date.now)
+	},
+	{
+		name: "Romantic outpost",
+		image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
+		price:7.99,
+		description: "We can assume that any instance of a donkey can be construed as an incuse cappelletti. A point sees a jumbo as a farouche philosophy. Those fogs are nothing more than calendars. Extending this logic, a butane is a sun from the right perspective.",
+		author:{
+			id:"5e44445089fc0b04192b7029",
+			username:"Turbuha"
+		},
+		createdAt:Date(Date.now)
+	},
+	{
+		name: "Volkwagen van dream",
+		image: "https://images.unsplash.com/photo-1516939884455-1445c8652f83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
+		price:0,
+		description: "We can assume that any instance of a donkey can be construed as an incuse cappelletti. A point sees a jumbo as a farouche philosophy. Those fogs are nothing more than calendars. Extending this logic, a butane is a sun from the right perspective.",
+		author:{
+			id:"5e44445089fc0b04192b7029",
+			username:"Turbuha"
+		},
+		createdAt:Date(Date.now)
 	}
 ];
 const commentSeed = {
@@ -50,9 +149,9 @@ const commentSeed = {
 
 async function seedDB(){
 	//remove all campgrounds
-	await Campground.deleteMany({});
+	//await Campground.deleteMany({});
 	console.log("Campgrounds removed");
-	await Comment.deleteMany({});
+	//await Comment.deleteMany({});
 	console.log("Comments removed");
 	
 	for (const seed of campgroundSeeds){
@@ -68,7 +167,7 @@ async function seedDB(){
 			
 			await campground.comments.push(comment);
 			console.log("This is the comments array: "+campground.comments);
-			await campground.save;
+			await campground.save();
 			console.log("Comment saved to database");
 		} catch(err){
 			console.log(err);
