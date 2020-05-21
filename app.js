@@ -15,7 +15,7 @@
 		  Log			= require("./models/log"),
 		  seedDB		= require("./seeds");
 
-try{
+
 	const campgroundRoutes = require("./routes/campgrounds"),
 		  commentRoutes = require ("./routes/comments"),
 		  userRoutes = require ("./routes/users"),
@@ -87,21 +87,7 @@ try{
 		app.use("/campgrounds", campgroundRoutes);
 		app.use("/users", userRoutes);
 		app.use("/admin", adminRoutes);
-}catch(err){
-	var	errLog = {
-	log:err.stack,
-		activity:{
-			agent:"app.js " + "Error code: "+err.code,
-			concerning:"error",
-			action:"main"
-		}
-	}
-	Log.create(errLog, function(err){
-		if(err){
-			console.log(err);
-		}
-	})
-}
+
 
 	const port = process.env.PORT || 3000;
 	app.listen(port,function(){

@@ -35,11 +35,11 @@
 								<a class="nav-link" href="/login">Login</a>
 							</li>
 							<li class="nav-item <%= typeof page !== 'undefined' && page === '/users/new' ? 'active' : '' %>">
-								<a class="nav-link" href="../users/new">Sign Up</a>
+								<a class="nav-link" href="/users/new">Sign Up</a>
 							</li>
 						<% } else { %>
 							<li class="nav-item">
-								<a class="nav-link" href="../users/<%= currentUser.id %>">Signed In as <%= currentUser.username %></a>
+								<a class="nav-link" href="/users/<%= currentUser.id %>">Signed In as <%= currentUser.username %></a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="/logout">Logout</a>

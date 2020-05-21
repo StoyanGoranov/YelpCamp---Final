@@ -1,5 +1,5 @@
 
-const regexName = /[^\w]+/g;
+const regexName = /[^\w\s]+/g;
 const regexLink = /^https?:\/\/*/g;
 const regexDesc = /{*}/g;
 

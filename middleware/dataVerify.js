@@ -4,8 +4,8 @@ const Campground = require ("../models/campground"),
 var middlewareObj = {};
 
 
-const regexName = /[^\w]+/g;
-const regexNumber = /[^\d]+/g;
+const regexName = /[^\w\s]+/g;
+const regexNumber = /[^\d]+.?[^\d]+?/g;
 const regexLink = /^https?:\/\/*/g;
 const regexDesc = /{*}/g;
 const regexEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -66,7 +66,7 @@ function invalidName(input){
 function invalidPrice(input){
 	//console.log(input.match(regexNumber));
 	if(input.match(regexNumber)){
-		console.log("Invalid name is true");
+		console.log("Invalid price is true");
 		return true;
 	} else {
 		return false;
@@ -74,11 +74,12 @@ function invalidPrice(input){
 }
 
 function invalidLink(input){
-	console.log(input.match(regexLink));
+	//console.log(input.match(regexLink));
 	if(input.match(regexLink)){
-		console.log("Invalid link is true");
+		
 		return false;
 	} else {
+		console.log("Invalid link is true");
 		return true;
 	}
 //	return regex.test(input);

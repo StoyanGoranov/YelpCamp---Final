@@ -1,5 +1,5 @@
 //alert("waa#")
-const regexName = /[^\w]+/g;
+const regexName = /[^\w\s]+/g;
 const regexLink = /^https?:\/\/*/g;
 const regexDesc = /{*}/g;
 const regexEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
