@@ -74,9 +74,9 @@ function invalidPrice(input){
 }
 
 function invalidLink(input){
+	//console.log("Input: "+input)
 	//console.log(input.match(regexLink));
-	if(input.match(regexLink)){
-		
+	if(input.match(regexLink) || !input){
 		return false;
 	} else {
 		console.log("Invalid link is true");

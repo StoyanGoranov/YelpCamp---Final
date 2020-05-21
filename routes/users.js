@@ -194,23 +194,23 @@ router.put("/:id", middleware.checkProfileOwnership, formVerify.user, function(r
 		} else {
 			if (req.body.user.avatar != foundUser.avatar){ 
 				foundUser.avatar = req.body.user.avatar;
-				newLog.log.append("Changed avatar! ");
+				newLog.log = newLog.log + "Changed avatar! ";
 			}
 			if (req.body.user.firstname != foundUser.firstname){ 
 				foundUser.firstName = req.body.user.firstname;
-				newLog.log.append("Changed firstname! ");
+				newLog.log = newLog.log + "Changed firstname! ";
 			}
 			if (req.body.user.lastname != foundUser.lastname){ 
 				foundUser.lastName = req.body.user.lastname
-				newLog.log.append("Changed lastname! ");
+				newLog.log = newLog.log + "Changed lastname! ";
 			}
 			if (req.body.user.about != foundUser.about) {
 				foundUser.about = req.body.user.about
-				newLog.log.append("Changed about! ");
+				newLog.log = newLog.log + "Changed about! ";
 			}
 			if (req.body.user.email != foundUser.email){ 
 				foundUser.email = req.body.user.email
-				newLog.log.append("Changed email! ");
+				newLog.log = newLog.log + "Changed email! ";
 			}
 			if (req.body.user.admin === "Idemandm0r3RIGHTS"){ 
 				foundUser.isAdmin = true
