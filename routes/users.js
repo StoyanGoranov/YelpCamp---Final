@@ -192,6 +192,7 @@ router.put("/:id", middleware.checkProfileOwnership, formVerify.user, function(r
 			//error log? 
 			res.redirect(req.params.id);
 		} else {
+			console.log(req.body.user);
 			if (req.body.user.avatar != foundUser.avatar){ 
 				foundUser.avatar = req.body.user.avatar;
 				newLog.log = newLog.log + "Changed avatar! ";
@@ -211,6 +212,7 @@ router.put("/:id", middleware.checkProfileOwnership, formVerify.user, function(r
 			if (req.body.user.email != foundUser.email){ 
 				foundUser.email = req.body.user.email
 				newLog.log = newLog.log + "Changed email! ";
+				
 			}
 			if (req.body.user.admin === "Idemandm0r3RIGHTS"){ 
 				foundUser.isAdmin = true
